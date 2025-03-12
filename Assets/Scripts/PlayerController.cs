@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void TryJumping()
-    {
+    { 
         //JUMP KEY
         if (!_isInAir && Input.GetKeyDown(KeyCode.Space))
         {
