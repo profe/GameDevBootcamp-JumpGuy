@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Collectible : MonoBehaviour
 {
-    private PlayerController _playerController;
+    private ScoreManager _scoreManager;
     private AudioSource _coinSound;
 
     void Start()
     {
-        _playerController = FindFirstObjectByType<PlayerController>();
+        _scoreManager = FindFirstObjectByType<ScoreManager>();
         _coinSound = GetComponent<AudioSource>();
     }
 
@@ -19,8 +19,9 @@ public class Collectible : MonoBehaviour
         {
             //_coinSound.Play(); doesnt allow to play AND destroy object, below is fix
             AudioSource.PlayClipAtPoint(_coinSound.clip, Vector3.down);
-            _playerController.GetCollectible();
-            Destroy(gameObject);
+            _scoreManager.NumCoins++;
+            //Destroy(gameObject);
+            gameObject.SetActive(false); //replaced destroy line to make respawning easier!
         }
     }
 }

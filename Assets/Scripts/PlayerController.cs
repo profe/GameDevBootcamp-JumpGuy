@@ -1,28 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     private bool _isInAir;
-    private bool _isFacingRight;
+    private bool _isFacingRight = true;
+    private int _hitsTaken;
 
     [SerializeField] private float _jumpStrength;
     [SerializeField] private float _moveSpeed;
-    [SerializeField] private int _numCollectibles;
-    //GAME OBJECTS    
+    [SerializeField] private int _hitsCanTake = 1;
+    //GAME OBJECTS
+    [SerializeField] private ScoreManager _scoreManager;
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private Animator _playerAnimator;
     [SerializeField] private Rigidbody2D _playerRigidBody;
     [SerializeField] private Transform _spawnPoint;
     [SerializeField] private AudioSource _jumpSound;
+    [SerializeField] private AudioSource _respawnSound;
 
-    void Start()
-    {
-        _isInAir = false;
-        _isFacingRight = true;
-        _jumpSound = GetComponent<AudioSource>();
-    }
+    /*
+        void Start()
+        {
+            _isFacingRight = true;
+            Spawn();
+        }
+    */
+
 
     void Update()
     {
@@ -37,19 +40,49 @@ public class PlayerController : MonoBehaviour
     }
 
     private void TryJumping()
-    { 
+    {
         //JUMP KEY
         if (!_isInAir && Input.GetKeyDown(KeyCode.Space))
         {
-            _jumpSound.Play();
-            _isInAir = true;
-            _playerAnimator.SetTrigger("Jump");
-            _playerRigidBody.AddForce(Vector2.up * _jumpStrength, ForceMode2D.Impulse);
+            DoJumpForce();
         }
+    }
+
+    private void JumpSettings()
+    {
+        _jumpSound.Play();
+        _isInAir = true;
+        _playerAnimator.SetTrigger("Jump");
+    }
+
+    public void AddForce(Vector2 vector, ForceMode2D forceMode)
+    {
+        _playerRigidBody.AddForce(vector, forceMode);
+    }
+
+    public void DoJumpForce()
+    {
+        JumpSettings();
+        AddForce(Vector2.up * _jumpStrength, ForceMode2D.Impulse);
+    }
+    public void DoSmallJumpForce()
+    {
+        JumpSettings();
+        AddForce(Vector2.up * _jumpStrength / 2, ForceMode2D.Impulse);
     }
 
     private void TryRunning()
     {
+        //SHIFT / SUPER RUN
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
+        {
+            _moveSpeed *= 2;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift))
+        {
+            _moveSpeed /= 2;
+        }
+
         //RIGHT ARROW
         if (Input.GetKey(KeyCode.RightArrow))
         {
@@ -58,7 +91,7 @@ public class PlayerController : MonoBehaviour
                 Flip();
             }
             _playerAnimator.SetBool("isRunning", true);
-            _playerTransform.position += Vector3.right * _moveSpeed;
+            _playerTransform.position += Vector3.right * _moveSpeed * Time.deltaTime;
         }
         if (Input.GetKeyUp(KeyCode.RightArrow))
         {
@@ -73,7 +106,7 @@ public class PlayerController : MonoBehaviour
                 Flip();
             }
             _playerAnimator.SetBool("isRunning", true);
-            _playerTransform.position += Vector3.left * _moveSpeed;
+            _playerTransform.position += Vector3.left * _moveSpeed * Time.deltaTime;
         }
         if (Input.GetKeyUp(KeyCode.LeftArrow))
         {
@@ -89,21 +122,33 @@ public class PlayerController : MonoBehaviour
         _playerTransform.localScale = theScale;
     }
 
-    public void GetCollectible()
+    public void TakeHit()
     {
-        _numCollectibles++;
-        //update visuals later
+        _hitsTaken++;
+        if (_hitsTaken >= _hitsCanTake)
+        {
+            Respawn();
+        }
     }
 
-    public void Respawn()
+    //general stuff and/or first time
+    public void Spawn()
     {
-        //sound was already played
-        //add pause?
-        //change UI (like decrementing lives or points)
+        _isInAir = true;
+        _hitsTaken = 0;
+        _playerTransform.position = _spawnPoint.position;
         if (!_isFacingRight)
         {
             Flip();
         }
-        _playerTransform.position = _spawnPoint.position;
+    }
+
+    //usually called after losing a life
+    public void Respawn()
+    {
+        _scoreManager.NumLives--;
+        Spawn();
+        _respawnSound.Play();
+        //should i respawn enemies too?
     }
 }

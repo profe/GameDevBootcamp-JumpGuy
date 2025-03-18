@@ -7,6 +7,9 @@ TagManager:
   - Ground
   - Collectible
   - Obstacle
+  - CoinBlock
+  - BrickBlock
+  - Enemy
   layers:
   - Default
   - TransparentFX
