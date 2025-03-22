@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerController _playerController;
     [SerializeField] private ScoreManager _scoreManager;
     [SerializeField] private UIManager _uiManager;
-    [SerializeField] private AudioSource _gameOverAudioSource;
+    [SerializeField] private SoundManager _soundManager;
     [SerializeField] private Transform _collectibleParent, _breakablesParent, _enemiesParent;
 
     void Start()
@@ -26,7 +26,6 @@ public class GameManager : MonoBehaviour
 
     public void ResetAll()
     {
-        _gameOverAudioSource.Stop(); //incase its playing from a quick restart of the game
         _uiManager.ResetUIs();
         _scoreManager.ResetScore();
         ResetInteractables();
@@ -61,9 +60,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         Debug.Log("Starting game over!");
-        //play game over music
-        _gameOverAudioSource.Play();
-        _isGamePlaying = false;
+        PlaySound("game_over");
 
         //display menu screen to try again
         PauseGame();
@@ -73,12 +70,50 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0;
-        //show pause menu
+        _isGamePlaying = false;
     }
 
     public void UnpauseGame()
     {
         Time.timeScale = 1;
-        //hide pause menu
+        _isGamePlaying = true;
+    }
+
+
+    // DELEGATE METHODS
+
+    public void PlaySound(string soundName)
+    {
+        _soundManager.PlaySound(soundName);
+    }
+
+    public void IncrementCoin()
+    {
+        _scoreManager.NumCoins++;
+    }
+
+    public void AddForce(Vector2 vector, ForceMode2D forceMode)
+    {
+        _playerController.AddForce(vector, forceMode);
+    }
+
+    public void TouchedGround()
+    {
+        _playerController.TouchedGround();
+    }
+
+    public void DoSmallJumpForce()
+    {
+        _playerController.DoSmallJumpForce();
+    }
+
+    public void IncrementSmushed()
+    {
+        _scoreManager.NumSmushed++;
+    }
+
+    public void TakeHit()
+    {
+        _playerController.TakeHit();
     }
 }

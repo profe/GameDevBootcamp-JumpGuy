@@ -2,17 +2,14 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    private PlayerController _playerController;
-    private ScoreManager _scoreManager;
+    private GameManager _gameManager;
     private bool _isFacingLeft;
 
-    [SerializeField] private AudioSource _destroySound;
     [SerializeField] private float _moveSpeed;
 
     void Start()
     {
-        _playerController = FindFirstObjectByType<PlayerController>();
-        _scoreManager = FindFirstObjectByType<ScoreManager>();
+        _gameManager = FindFirstObjectByType<GameManager>();
         _isFacingLeft = true;
     }
 
@@ -56,16 +53,16 @@ public class Enemy : MonoBehaviour
             Vector2 direction = (collision.gameObject.transform.position - gameObject.transform.position).normalized;
             if (direction.y > 0)
             {
-                AudioSource.PlayClipAtPoint(_destroySound.clip, Vector3.down);
-                _playerController.DoSmallJumpForce();
+                _gameManager.PlaySound("jump");
+                _gameManager.DoSmallJumpForce();
                 //Destroy(gameObject);
                 gameObject.SetActive(false); //replaced destroy line to make respawning easier!
-                _scoreManager.NumSmushed++; //why did i have to swap destroy line above for this to work?
+                _gameManager.IncrementSmushed(); //why did i have to swap destroy line above for this to work?
             }
             else //anywhere else should cause player damage
             {
                 Debug.Log("hit by enemy!");
-                _playerController.TakeHit();
+                _gameManager.TakeHit();
             }
         }
         else if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Obstacle"))

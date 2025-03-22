@@ -1,25 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Collectible : MonoBehaviour
 {
-    private ScoreManager _scoreManager;
-    private AudioSource _coinSound;
+    private GameManager _gameManager;
 
     void Start()
     {
-        _scoreManager = FindFirstObjectByType<ScoreManager>();
-        _coinSound = GetComponent<AudioSource>();
+        _gameManager = FindFirstObjectByType<GameManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.gameObject.CompareTag("Player"))
         {
-            //_coinSound.Play(); doesnt allow to play AND destroy object, below is fix
-            AudioSource.PlayClipAtPoint(_coinSound.clip, Vector3.down);
-            _scoreManager.NumCoins++;
+            _gameManager.PlaySound("collectible");
+            _gameManager.IncrementCoin();
             //Destroy(gameObject);
             gameObject.SetActive(false); //replaced destroy line to make respawning easier!
         }

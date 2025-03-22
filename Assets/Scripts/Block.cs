@@ -2,15 +2,11 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-    private PlayerController _playerController;
-    private ScoreManager _scoreManager;
-
-    [SerializeField] private AudioSource _breakSound, _coinSound;
+    private GameManager _gameManager;
 
     void Start()
     {
-        _playerController = FindFirstObjectByType<PlayerController>();
-        _scoreManager = FindFirstObjectByType<ScoreManager>();
+        _gameManager = FindFirstObjectByType<GameManager>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -25,14 +21,14 @@ public class Block : MonoBehaviour
             {
                 HandleSpecificBlock();
                 //add force down to simulate player hitting and being pushed down after hit
-                _playerController.AddForce(Vector2.down, ForceMode2D.Impulse);
+                _gameManager.AddForce(Vector2.down, ForceMode2D.Impulse);
             }
 
             //check if colliding with top
             //  allow them to jump again
             if (direction.y == -1)
             {
-                _playerController.TouchedGround();
+                _gameManager.TouchedGround();
             }
         }
     }
@@ -51,15 +47,15 @@ public class Block : MonoBehaviour
 
     private void BreakCoinBlock()
     {
-        AudioSource.PlayClipAtPoint(_coinSound.clip, Vector3.down);
-        _scoreManager.NumCoins++;
+        _gameManager.PlaySound("collectible");
+        _gameManager.IncrementCoin();
 
         BreakBrickBlock();
     }
 
     private void BreakBrickBlock()
     {
-        AudioSource.PlayClipAtPoint(_breakSound.clip, Vector3.down);
+        _gameManager.PlaySound("break_block");
         //hide/animate break block
         //Destroy(gameObject);
         gameObject.SetActive(false); //replaced destroy line to make respawning easier!

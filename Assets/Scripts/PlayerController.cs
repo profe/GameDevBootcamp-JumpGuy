@@ -11,12 +11,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int _hitsCanTake = 1;
     //GAME OBJECTS
     [SerializeField] private ScoreManager _scoreManager;
+    [SerializeField] private SoundManager _soundManager;
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private Animator _playerAnimator;
     [SerializeField] private Rigidbody2D _playerRigidBody;
     [SerializeField] private Transform _spawnPoint;
-    [SerializeField] private AudioSource _jumpSound;
-    [SerializeField] private AudioSource _respawnSound;
 
     /*
         void Start()
@@ -50,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
     private void JumpSettings()
     {
-        _jumpSound.Play();
+        _soundManager.PlaySound("jump");
         _isInAir = true;
         _playerAnimator.SetTrigger("Jump");
     }
@@ -148,7 +147,9 @@ public class PlayerController : MonoBehaviour
     {
         _scoreManager.NumLives--;
         Spawn();
-        _respawnSound.Play();
+        _soundManager.PlaySound("respawn");
         //should i respawn enemies too?
     }
+
+
 }
