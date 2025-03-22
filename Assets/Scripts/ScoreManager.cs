@@ -9,7 +9,8 @@ public class ScoreManager : MonoBehaviour
     private int _numLivesStart = 3,
     _coinValue = 10,
     _livesValue = 50,
-    _smushedValue = 5;
+    _smushedValue = 5,
+    _poleValue = 10; //pole value is like value per inch/foot whatever measurement
 
     private int _totalScore;
 
@@ -69,6 +70,13 @@ public class ScoreManager : MonoBehaviour
     public int CalculateTotalScore()
     {
         _totalScore = NumCoins * _coinValue + NumLives * _livesValue + NumSmushed * _smushedValue;
+
+        return _totalScore;
+    }
+
+    public int CalculateTotalScore(int poleHeight)
+    {
+        _totalScore = NumCoins * _coinValue + NumLives * _livesValue + NumSmushed * _smushedValue + poleHeight * _poleValue;
 
         return _totalScore;
     }

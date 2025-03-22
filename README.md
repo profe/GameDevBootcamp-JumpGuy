@@ -18,19 +18,10 @@ Features:
 
 Features:
 
-- Integrate a menu (footer scores and game over menu)
-- Calculate score based on number of lives, pickups collected and enemies smushed
+- Integrate a menu (main menu, footer scores, game over menu, level complete menu)
+- Calculate score based on number of lives, pickups collected, enemies smushed, and final pole location
 - Updated project to Unity 6
-
-TODOs:
-
-- finish off rest of level design
-- implement level complete screen
-
-WISHLIST:
-
-- pause menu
-- better way to respawn enemies/items
+- Refactoring (sound manager, UI manager)
 
 ### Resources Used:
 

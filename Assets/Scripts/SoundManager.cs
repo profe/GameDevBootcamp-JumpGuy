@@ -3,7 +3,7 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     [SerializeField] private AudioSource _backgroundMusic, _playerSFX, _blockSFX, _enemySFX, _collectibleSFX;
-    [SerializeField] private AudioClip _clipJump, _clipRespawn, _clipCollectible, _clipBlockBreak, _clipGameOver;
+    [SerializeField] private AudioClip _clipJump, _clipRespawn, _clipCollectible, _clipBlockBreak, _clipGameOver, _clipLevelComplete, _clipFlag;
 
     public void PlaySound(string soundName)
     {
@@ -24,6 +24,14 @@ public class SoundManager : MonoBehaviour
             case "game_over":
                 _backgroundMusic.Stop();
                 _backgroundMusic.PlayOneShot(_clipGameOver);
+                break;
+            case "completed_level":
+                _backgroundMusic.Stop();
+                _backgroundMusic.PlayOneShot(_clipLevelComplete);
+                break;
+            case "flag":
+                _backgroundMusic.Stop();
+                _playerSFX.PlayOneShot(_clipFlag);
                 break;
         }
     }

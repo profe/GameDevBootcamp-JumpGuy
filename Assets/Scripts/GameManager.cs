@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,7 +11,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ScoreManager _scoreManager;
     [SerializeField] private UIManager _uiManager;
     [SerializeField] private SoundManager _soundManager;
-    [SerializeField] private Transform _collectibleParent, _breakablesParent, _enemiesParent;
 
     void Start()
     {
@@ -38,13 +38,22 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        Debug.Log("Starting game over!");
         PlaySound("game_over");
 
         //display menu screen to try again
         PauseGame();
         _uiManager.ShowGameOverUI(_scoreManager.CalculateTotalScore());
     }
+
+    public void CompletedLevel(int poleHeight)
+    {
+        PlaySound("flag");
+        PauseGame();
+        //add delay of 1 second would be nice here
+        PlaySound("completed_level");
+        _uiManager.ShowLevelCompleteUI(_scoreManager.CalculateTotalScore(poleHeight));
+    }
+
 
     public void PauseGame()
     {
