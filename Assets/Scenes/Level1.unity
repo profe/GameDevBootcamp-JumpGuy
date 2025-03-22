@@ -552,7 +552,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -508.2296}
+  m_AnchoredPosition: {x: 400, y: -419.03918}
   m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &221191970
@@ -577,8 +577,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.7735849, g: 0.762638, b: 0.762638, a: 1}
+    m_PressedColor: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -599,16 +599,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1513193978}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: ResetAll
-        m_Mode: 1
+      - m_Target: {fileID: 1513193981}
+        m_TargetAssemblyTypeName: SceneTransition, Assembly-CSharp
+        m_MethodName: SwitchScenes
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Menu
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &221191971
@@ -1999,7 +1999,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -428.2296}
+  m_AnchoredPosition: {x: 400, y: -339.03918}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &635176709
@@ -2532,7 +2532,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -348.2296}
+  m_AnchoredPosition: {x: 400, y: -259.03918}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1008459119
@@ -3570,6 +3570,7 @@ GameObject:
   - component: {fileID: 1513193978}
   - component: {fileID: 1513193977}
   - component: {fileID: 1513193980}
+  - component: {fileID: 1513193981}
   m_Layer: 0
   m_Name: GamePlay
   m_TagString: Untagged
@@ -3886,6 +3887,9 @@ MonoBehaviour:
   _scoreManager: {fileID: 1513193977}
   _uiManager: {fileID: 1513193980}
   _gameOverAudioSource: {fileID: 1513193979}
+  _collectibleParent: {fileID: 1314778635}
+  _breakablesParent: {fileID: 2073588713}
+  _enemiesParent: {fileID: 1575903560}
 --- !u!82 &1513193979
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3997,6 +4001,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameOverCanvas: {fileID: 14071010}
   _finalScoreText: {fileID: 635176709}
+--- !u!114 &1513193981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513193972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c379f6065dc144f886045c3ba6e70fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1575903559
 GameObject:
   m_ObjectHideFlags: 0
@@ -4144,7 +4160,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -201.66461}
+  m_AnchoredPosition: {x: 400, y: -112.4742}
   m_SizeDelta: {x: 229.58, y: 183.13}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1714350094
@@ -5023,10 +5039,10 @@ SceneRoots:
   - {fileID: 197920463}
   - {fileID: 1284746244}
   - {fileID: 681311409}
+  - {fileID: 417313004}
   - {fileID: 1314778635}
   - {fileID: 2073588713}
-  - {fileID: 417313004}
   - {fileID: 1575903560}
+  - {fileID: 1491407013}
   - {fileID: 266697355}
   - {fileID: 14071014}
-  - {fileID: 1491407013}
