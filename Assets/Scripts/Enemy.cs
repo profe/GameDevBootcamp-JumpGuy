@@ -28,11 +28,11 @@ public class Enemy : MonoBehaviour
                 */
         if (_isFacingLeft)
         {
-            transform.position += Vector3.left * _moveSpeed * Time.deltaTime;
+            transform.position += _moveSpeed * Time.deltaTime * Vector3.left;
         }
         else
         {
-            transform.position += Vector3.right * _moveSpeed * Time.deltaTime;
+            transform.position += _moveSpeed * Time.deltaTime * Vector3.right;
         }
     }
 
@@ -55,9 +55,8 @@ public class Enemy : MonoBehaviour
             {
                 _gameManager.PlaySound("jump");
                 _gameManager.DoSmallJumpForce();
-                //Destroy(gameObject);
-                gameObject.SetActive(false); //replaced destroy line to make respawning easier!
-                _gameManager.IncrementSmushed(); //why did i have to swap destroy line above for this to work?
+                _gameManager.IncrementSmushed();
+                Destroy(gameObject);
             }
             else //anywhere else should cause player damage
             {

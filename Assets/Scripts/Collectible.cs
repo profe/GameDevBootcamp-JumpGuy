@@ -18,8 +18,7 @@ public class Collectible : MonoBehaviour
         {
             _gameManager.PlaySound("collectible");
             _gameManager.IncrementCoin();
-            //Destroy(gameObject);
-            gameObject.SetActive(false); //replaced destroy line to make respawning easier!
+            Destroy(gameObject);
         }
     }
 }

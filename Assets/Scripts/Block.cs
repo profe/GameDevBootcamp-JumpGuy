@@ -57,7 +57,6 @@ public class Block : MonoBehaviour
     {
         _gameManager.PlaySound("break_block");
         //hide/animate break block
-        //Destroy(gameObject);
-        gameObject.SetActive(false); //replaced destroy line to make respawning easier!
+        Destroy(gameObject);
     }
 }

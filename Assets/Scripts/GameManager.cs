@@ -28,28 +28,7 @@ public class GameManager : MonoBehaviour
     {
         _uiManager.ResetUIs();
         _scoreManager.ResetScore();
-        ResetInteractables();
         _playerController.Spawn();
-    }
-
-    //NOTE: just sets all objects to active. should probably replace all enemies/collectibles/breakables with spawn points? or easier way?
-    public void ResetInteractables()
-    {
-        //respawn all enemies
-        for (int i = 0; i < _collectibleParent.childCount; i++)
-        {
-            _collectibleParent.GetChild(i).GetComponent<Transform>().gameObject.SetActive(true);
-        }
-        //restore all breakables
-        for (int i = 0; i < _breakablesParent.childCount; i++)
-        {
-            _breakablesParent.GetChild(i).GetComponent<Transform>().gameObject.SetActive(true);
-        }
-        //restore all collectibles
-        for (int i = 0; i < _enemiesParent.childCount; i++)
-        {
-            _enemiesParent.GetChild(i).GetComponent<Transform>().gameObject.SetActive(true);
-        }
     }
 
     public int CalculateFinalScore()
