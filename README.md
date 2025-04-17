@@ -2,6 +2,8 @@
 
 Sidescroller 2D retro-style game during CircuitStream Game Development Bootcamp using Unity 6
 
+![gameplay screen capture for JumpGuy](./Docs/part2.gif)
+
 ## Part 1 - Basic Movement/Interactions
 
 Features:
